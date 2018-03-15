@@ -3,6 +3,7 @@ package br.com.whs.javaknowledge.commons.util;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -60,11 +61,13 @@ public class ModelGenerator {
         } else if(type.equals(Float.TYPE) || type.equals(Float.class)) {
             return random.nextFloat();
         } else if(type.equals(String.class)) {
-            return UUID.randomUUID().toString();
+            return field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1) + " " + UUID.randomUUID().toString().substring(0, 8);
         } else if(type.equals(BigInteger.class)){
             return BigInteger.valueOf(random.nextInt());
         } else if(type.equals(Date.class)){
-            return new Date();
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.YEAR, -random.nextInt(30));
+            return c.getTime();
         }
         return createAndFill(type);
     }
